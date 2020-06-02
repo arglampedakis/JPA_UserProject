@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import model.Role;
 import model.User;
 
 /**
@@ -48,8 +49,8 @@ public class UserDao {
         em.getTransaction().commit();//τρεχω το transaction
         em.close();
     }
-    
-    public void updateUser(int id, String name){
+
+    public void updateUser(int id, String name) {
         EntityManager em = emf.createEntityManager();
         User user = getUserById(id);
         em.getTransaction().begin();
@@ -58,5 +59,20 @@ public class UserDao {
         em.flush();
         em.getTransaction().commit();
         em.close();
+    }
+
+    public boolean insertUser(String name, int roleid) {
+        EntityManager em = emf.createEntityManager();
+        Role role = em.find(Role.class, roleid);
+        User newUser = new User();
+        newUser.setUsername(name);
+        newUser.setRoleId(role);
+
+        em.getTransaction().begin();
+        em.persist(newUser);
+        em.flush();
+        em.getTransaction().commit();
+
+        return em.contains(newUser);
     }
 }

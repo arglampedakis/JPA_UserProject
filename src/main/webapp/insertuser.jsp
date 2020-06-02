@@ -15,7 +15,7 @@
     <body>
         <hr>
         <br><br>
-        <form align="center">
+        <form action="insert" method="post" align="center">
             Username: <input type="text" name="username"/>
             <br><br>
             <label for="role">Select Role</label>

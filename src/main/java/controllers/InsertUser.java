@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.RoleDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -39,7 +40,7 @@ public class InsertUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Insertuser</title>");            
+            out.println("<title>Servlet Insertuser</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Insertuser at " + request.getContextPath() + "</h1>");
@@ -61,12 +62,11 @@ public class InsertUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //read param 
-        
+
         //bl
-        
         RoleDao roleDao = new RoleDao();
         List<Role> allRoles = roleDao.fetchAllRoles();
-        
+
         request.setAttribute("roles", allRoles);
         //
         RequestDispatcher rd = request.getRequestDispatcher("insertuser.jsp");
@@ -84,7 +84,19 @@ public class InsertUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("username");
+        String roleid = request.getParameter("role");
+
+        UserDao udao = new UserDao();
+        boolean success = udao.insertUser(name, Integer.parseInt(roleid));
+
+        if (success) {
+            request.setAttribute("resultMessage", "Successfully inserted to data base");
+        } else {
+            request.setAttribute("resultMessage", "Failed to insert to data base");
+        }
+        response.sendRedirect("allusers");
+
     }
 
     /**
