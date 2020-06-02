@@ -72,7 +72,8 @@ public class UserDao {
         em.persist(newUser);
         em.flush();
         em.getTransaction().commit();
-
-        return em.contains(newUser);
+        boolean result = em.contains(newUser);
+        em.close();
+        return result;
     }
 }
