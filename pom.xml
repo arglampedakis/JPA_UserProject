@@ -32,6 +32,14 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!--https://mvnrepository.com/artifact/org.mindrot/jbcrypt for password hashing--> 
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

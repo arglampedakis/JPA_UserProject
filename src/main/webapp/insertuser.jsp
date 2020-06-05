@@ -18,6 +18,9 @@
         <form action="insert" method="post" align="center">
             Username: <input type="text" name="username"/>
             <br><br>
+            Password: <input type="password" name="userpass"/>
+            <!--TODO Fix servlet-->
+            <br><br>
             <label for="role">Select Role</label>
             <select name="role">
                 <c:forEach items="${roles}" var="r">

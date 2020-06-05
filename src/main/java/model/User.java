@@ -41,11 +41,19 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "user_id")
     private Integer userId;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "username")
     private String username;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 60)
+    @Column(name = "userpass")
+    private String userpass;
+
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
     private Role roleId;
@@ -108,11 +116,19 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Users[ userId=" + userId + " ]";
+        return "model.User[ userId=" + userId + " ]";
     }
-    
+
     @PrePersist
-    public void lala(){
+    public void lala() {
         System.out.println("PrePersist method run");
+    }
+
+    public String getUserpass() {
+        return userpass;
+    }
+
+    public void setUserpass(String userpass) {
+        this.userpass = userpass;
     }
 }

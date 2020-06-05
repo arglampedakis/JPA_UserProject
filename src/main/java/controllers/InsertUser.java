@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Role;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -66,7 +67,7 @@ public class InsertUser extends HttpServlet {
         //bl
         RoleDao roleDao = new RoleDao();
         List<Role> allRoles = roleDao.fetchAllRoles();
-
+        
         request.setAttribute("roles", allRoles);
         //
         RequestDispatcher rd = request.getRequestDispatcher("insertuser.jsp");
@@ -86,17 +87,21 @@ public class InsertUser extends HttpServlet {
             throws ServletException, IOException {
         String name = request.getParameter("username");
         String roleid = request.getParameter("role");
-
+        String password = request.getParameter("userpass");
+        // Hash user password 
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        password = null; // release original password
+        
         UserDao udao = new UserDao();
-        boolean success = udao.insertUser(name, Integer.parseInt(roleid));
-
+        boolean success = udao.insertUser(name, hashedPassword, Integer.parseInt(roleid));
+        
         if (success) {
             request.setAttribute("resultMessage", "Successfully inserted to data base");
         } else {
             request.setAttribute("resultMessage", "Failed to insert to data base");
         }
         response.sendRedirect("allusers");
-
+        
     }
 
     /**

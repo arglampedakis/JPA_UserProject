@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -66,10 +67,22 @@ public class UserServlet extends HttpServlet {
         String userid = request.getParameter("userid");
         //2 buisness logic -> get all users from DB
         UserDao udao = new UserDao();
-        if (action!=null && action.equals("delete")) { // delete user
+        if (action != null && action.equals("delete")) { // delete user
             //delete code
             udao.deleteUser(Integer.parseInt(userid));
             response.sendRedirect("allusers");
+            /*
+            HttpSession session = request.getSession();
+            User u = (User) session.getAttribute("loggedUser");
+            int role = u.getRoleId().getRoleId();
+            if (role == 1) { // role id 1 = Admin
+                udao.deleteUser(Integer.parseInt(userid));
+                response.sendRedirect("allusers");
+            } else {
+
+            }
+             */
+
         } else { // fetch all users
 
             List<User> allUsers = udao.fetchAllUsers();
