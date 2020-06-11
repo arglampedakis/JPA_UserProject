@@ -5,8 +5,13 @@
  */
 package controllers;
 
+import dao.FileDao;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +64,46 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String fileId = request.getParameter("fileId");
+
+        FileDao fdao = new FileDao();
+        OurFile f = fdao.getFileById(Integer.parseInt(fileId));
+
+        //converting to inputStream in order to pass it to response's outputStream
+        InputStream inputStream = new ByteArrayInputStream(f.getMyFile());
+        //inputStream now has the file 
+
+        //configuring the type of the file
+        ServletContext context = getServletContext();
+        String mimetype = context.getMimeType(f.getFileName());
+        
+        //checking if mimetype is null
+        if (mimetype == null) {
+            mimetype = "application/octet-stream";
+        }
+        
+        response.setContentType(mimetype);
+        //Output stream from response
+        OutputStream outStream = response.getOutputStream();
+
+        //fill outputStream
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            /*
+             το condition θα παρει τα πρωτα 4096 bytes (4Kb) κ θα τα βαλει στ buffer, μετα θα τα 
+             περασει στ outStream. To bytesRead κραταει ποσα bytes εχουν διαβαστει κ στην ουσια 
+             τ λεει απο που να ξεκινησει το επομενο write. Για παραδειγμα μετα την πρωτη loopa θα εχει 
+             τιμή 4097 αν το αρχειο ειναι μεγαλυτερο απο 4096 bytes 
+             */
+            outStream.write(buffer, 0, bytesRead);
+        }
+
+        inputStream.close();
+        outStream.close();
+
     }
 
     /**
@@ -73,14 +117,15 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         Part p = request.getPart("myfile");
-        
+
         OurFile f = new OurFile();
         f.setFileName(p.getSubmittedFileName());
         f.setMyFile(MyFileUtils.convertInputStreamToByteArray(p.getInputStream()));
-        
-        
-        
+
+        FileDao fdao = new FileDao();
+        fdao.insertFile(f);
     }
 
     /**

@@ -38,7 +38,7 @@ public class OurFile implements Serializable {
     @Basic(optional = false)
     @Column(name = "file_id")
     private Integer fileId;
-    @Size(max = 30)
+    @Size(max = 60)
     @Column(name = "file_name")
     private String fileName;
     @Lob

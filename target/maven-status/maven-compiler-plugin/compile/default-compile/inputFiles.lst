@@ -1,7 +1,11 @@
 C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\controllers\InsertUser.java
 C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\controllers\LoginServlet.java
+C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\controllers\UploadServlet.java
 C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\controllers\UserServlet.java
 C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\dao\RoleDao.java
+C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\util\MyFileUtils.java
+C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\model\OurFile.java
 C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\dao\UserDao.java
+C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\dao\FileDao.java
 C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\model\Role.java
 C:\Users\glamb\Documents\NetBeansProjects\JpaUserTest\src\main\java\model\User.java

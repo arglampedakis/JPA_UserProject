@@ -1,7 +1,11 @@
+dao\FileDao.class
+controllers\UploadServlet.class
+dao\UserDao.class
+util\MyFileUtils.class
+controllers\UserServlet.class
+model\OurFile.class
 model\Role.class
 controllers\InsertUser.class
-dao\UserDao.class
 dao\RoleDao.class
 model\User.class
 controllers\LoginServlet.class
-controllers\UserServlet.class
