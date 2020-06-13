@@ -61,11 +61,12 @@ public class UserDao {
         em.close();
     }
 
-    public boolean insertUser(String name, int roleid) {
+    public boolean insertUser(String name, String password, int roleid) {
         EntityManager em = emf.createEntityManager();
         Role role = em.find(Role.class, roleid);
         User newUser = new User();
         newUser.setUsername(name);
+        newUser.setUserpass(password);
         newUser.setRoleId(role);
 
         em.getTransaction().begin();
@@ -75,5 +76,14 @@ public class UserDao {
         boolean result = em.contains(newUser);
         em.close();
         return result;
+    }
+
+    public User getUserByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        User user = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                .setParameter("username", name)
+                .getSingleResult();
+        em.close();
+        return user;
     }
 }

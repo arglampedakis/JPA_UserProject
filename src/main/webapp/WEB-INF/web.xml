@@ -8,6 +8,22 @@
         <servlet-name>Insertuser</servlet-name>
         <servlet-class>controllers.InsertUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>controllers.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>controllers.UploadServlet</servlet-class>
+        <multipart-config>
+             <!--max file bytes-->
+            <max-file-size>10485760</max-file-size> 
+            <!-- max request bytes in case of multiple files-->
+            <max-request-size>20971520</max-request-size>
+            <!-- if the request is greater than the number below, Hard Drive will be used instead of Data Base-->
+            <file-size-threshold>5242880</file-size-threshold>
+        </multipart-config>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/allusers</url-pattern>
@@ -15,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>Insertuser</servlet-name>
         <url-pattern>/insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/doLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/uploadfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

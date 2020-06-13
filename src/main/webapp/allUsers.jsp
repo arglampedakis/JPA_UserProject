@@ -14,14 +14,17 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Table of All Users</h1>
+        <h1>Welcome ${loggedUser.username}</h1>
+        <h3>Table of All Users</h3>
         <table border="1">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Username</th>
                     <th>Role Name</th>
-                    <th>Delete</th>
+                        <c:if test="${loggedUser.roleId.roleId == 1}">
+                        <th>Delete</th>
+                        </c:if>
                 </tr>
             </thead>
             <tbody>
@@ -30,11 +33,21 @@
                         <td>${u.userId}</td>
                         <td>${u.username}</td>
                         <td>${u.roleId.roleName}</td>
-                        <td><a href="allusers?userid=${u.userId}&action=delete">Delete</a></td>
+                        <c:if test="${loggedUser.roleId.roleId == 1}">
+                            <td><a href="allusers?userid=${u.userId}&action=delete">Delete</a></td>
+                            <!--alternative way-->
+                            <!-- <td>
+                            <form action="allusers" method="post">
+                            <input type="hidden" name="userid" value="${u.userId}"/>
+                            <input type="hidden" name="action" value="delete"/>
+                            <input type="submit" value="delete"/>
+                            </form>
+                            </td> -->
+                        </c:if>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-        
+
     </body>
 </html>

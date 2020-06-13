@@ -1,6 +1,0 @@
-model\Role.class
-controllers\InsertUser.class
-dao\UserDao.class
-dao\RoleDao.class
-model\User.class
-controllers\UserServlet.class
